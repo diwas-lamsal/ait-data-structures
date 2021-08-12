@@ -19,7 +19,7 @@ def insertion_sort(slist):
     for x in range(1, len(slist)):  # Starting from 1 because the first element has nothing to compare itself to
         key = slist[x]
         y = x - 1
-        while y > -1 and slist[y] > key:  # iteratively 
+        while y > -1 and slist[y] > key:  # Iteratively take the key to the left if it is smaller
             slist[y + 1] = slist[y]
             y -= 1
         slist[y + 1] = key
@@ -34,6 +34,7 @@ print(f"List sorted using insertion sort: {sample_list}")
 
 
 # -------------------------------------- Merge Sort -------------------------------------- #
+
 
 def merge(slist, start, middle, end):
     """
@@ -60,8 +61,6 @@ def merge(slist, start, middle, end):
     j = 0
 
     for k in range(start, end + 1):
-        # print(f"k:{k}, n:{n}, m:{m}, i:{i}, j:{j}, start: {start}, end: {end}, \n left: {left}, right: {right}, "
-        #       f"slist:{slist}")
         if left[i] <= right[j]:
             slist[k] = left[i]
             i += 1
