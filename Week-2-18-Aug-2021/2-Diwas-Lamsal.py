@@ -9,8 +9,8 @@ import numpy as np
 # -------------------------------------- Initialize Variables -------------------------------------- #
 
 # I learned that float128 does not currently work with windows
-# But using float64 causes an overflow in our y=2n function and throws a runtime warning
-x = np.logspace(0, 15, 100, dtype=np.float64)
+# But using other data type causes an overflow in our y=2n function and throws a runtime warning
+x = np.logspace(0, 15, 100, dtype=np.longdouble)
 y_1 = np.ones(100)
 y_n = x
 y_square = x * x
@@ -34,8 +34,8 @@ p.plot(x, y_n, label='n')
 p.plot(x, y_square, label='square')
 p.plot(x, y_squareroot, label='squareroot')
 p.plot(x, y_nlogn, label='nlogn')
-p.plot(x, y_cube, label='cube')
-p.plot(x, y_2n, label='2n')
+p.plot(x, y_cube, label='n^3')
+p.plot(x, y_2n, label='2^n')
 
 # Show the legend and the plot
 plt.legend()
