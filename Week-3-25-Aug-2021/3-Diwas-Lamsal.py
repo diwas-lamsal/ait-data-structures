@@ -2,18 +2,26 @@
 # 2021-August-18 Data Structures and Algorithms Week 3
 # Question: Maximum Subarray Problem Using Python
 
-# import matplotlib and numpy
-import math
+# imports
 import numpy as np
 import timeit
 import math
 import random
 import matplotlib.pyplot as plt
 
-
-# -------------------------------------- Initialize Variables -------------------------------------- #
+# ----------------------------------------------------------------------------------------------------- #
+# -------------------------------------- IMPLEMENTING PSEUDOCODE -------------------------------------- #
+# ----------------------------------------------------------------------------------------------------- #
 
 def find_max_crossing_subarray(A, low, mid, high):
+    """
+    This function returns the maximum sum from the provided subarray and the indexes of starting and ending elements
+    :param A: The array to find maximum sum
+    :param low: The starting index
+    :param mid: Middle index
+    :param high: Ending index
+    :return: indexes of left and right element which make up the maximum sum and the sum of elements between the indexes
+    """
     max_left = -math.inf
     left_sum = -math.inf
     sum_subarray = 0
@@ -34,6 +42,13 @@ def find_max_crossing_subarray(A, low, mid, high):
 
 
 def find_maximum_subarray(A, low, high):
+    """
+    This function returns the maximum subarray from the provided array
+    :param A: Array to find the maximum subarray
+    :param low: Starting index of the array
+    :param high: Last index of the array
+    :return: Starting index, ending index, and the maximum sum of the subarray
+    """
     if high == low:
         return low, high, A[low]
     else:
@@ -48,10 +63,15 @@ def find_maximum_subarray(A, low, high):
         else:
             return cross_low, cross_high, cross_sum
 
+# ------------------------------------------------------------------------------------------------------- #
 
-# Test (Same arrays as classroom)
+# Test (Used same arrays as in classroom to compare)
 
 def test_function(A_test):
+    """
+    :param A_test: Array to test the maximum subarray function
+    :return: None
+    """
     print("--------------------------------------------------")
     print("Input: ", A_test)
     (start, end, sum) = find_maximum_subarray(A_test, 0, len(A_test) - 1)
@@ -64,7 +84,10 @@ test_function(np.array([-5, 1, 2, 9, -5, 8]))
 test_function(np.array([-2, -3, 4, -1, -2, 1, 5, 3, -3, 2]))
 test_function(np.array([2, -1, 4, -5, 4, 3]))
 
-# Find the time taken by algorithm and plot compared to nlogn
+# ------------------------------------------------------------------------------------------------------- #
+# --------------------------------PLOTTING THE CODE TIME VS COMPLEXITY----------------------------------- #
+# ------------------------------------------------------------------------------------------------------- #
+
 
 from random import sample
 from timeit import timeit
@@ -76,17 +99,21 @@ num_samples = range(10, 1000, 10)
 # This is probably true for my PC due to hardware and might be a different value for a different one
 c = 1/200000
 
-# https://stackoverflow.com/questions/41883548/python-for-algorithm-execution-visualization
+# The idea was taken from https://stackoverflow.com/questions/41883548/python-for-algorithm-execution-visualization
 timevals = []
 y_nlogn = []
 for n in num_samples:
+    # https://www.geeksforgeeks.org/python-random-sample-function/
     my_list = sample(range(n), n)
     y_nlogn.append(c * n * np.log(n))
-    # https://docs.python.org/3/library/timeit.html
-    # https://www.geeksforgeeks.org/timeit-python-examples/
+    # Using timeit function https://docs.python.org/3/library/timeit.html
+    # Using timeit function https://www.geeksforgeeks.org/timeit-python-examples/
     time = timeit('find_maximum_subarray(my_list, 0, len(my_list) - 1)', number=1, globals=globals())
     timevals.append(time)
 plt.plot(num_samples, y_nlogn, label='nlogn')
 plt.plot(num_samples, timevals, label="Code Runtime")
 plt.legend()
 plt.show()
+
+# ------------------------------------------------------------------------------------------------------- #
+
