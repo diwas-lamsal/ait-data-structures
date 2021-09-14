@@ -3,11 +3,7 @@
 # Question: Implementing Heapsort and Quicksort Using Python
 
 # imports
-import numpy as np
-import timeit
 import math
-import random
-import matplotlib.pyplot as plt
 
 
 # ----------------------------------------------------------------------------------------------------- #
@@ -15,15 +11,15 @@ import matplotlib.pyplot as plt
 # ----------------------------------------------------------------------------------------------------- #
 
 def parent(i):
-    return math.floor(i / 2)
+    return math.floor((i - 1) / 2) # i - 1 because python index starts with 0
 
 
 def left(i):
-    return 2 * i
+    return 2 * i + 1 # Doing + 1 because python index starts with 0 and left of 0 would otherwise be 2 * 0 = 0
 
 
 def right(i):
-    return (2 * i) + 1
+    return (2 * i) + 2 # Doing + 2 because of the same reason as left
 
 
 def max_heapify(A, i, heapsize):
@@ -45,6 +41,10 @@ def max_heapify(A, i, heapsize):
 def build_max_heap(A):
     heapsize = len(A) - 1
     # In the for loop, using the index down to 0 does not work but -1 works
+    # I also checked online for other implementations of heapsort and everyone went down to -1
+
+    # Because 0 is the index of the first element, we are performing max-heapify up to this index.
+    # the -1 implies run the loop until index >= 0 and stop after we have heapified all the parent elements
     for i in range(math.floor((len(A) - 1) / 2), -1, -1):
         max_heapify(A, i, heapsize)
 
@@ -105,4 +105,6 @@ def test_sort(A):
 test_sort([7, 4, 10, 8, 1, 9, 3, 16, 14, 2])
 test_sort([15, 13, 9, 5, 12, 8, 7, 4, 0, 6, 2, 1])
 test_sort([3, 2, 5, 10, 8, 7])
+test_sort([9, 2, 5, 1, 10, 4, 14, 3, 6])
+
 # ----------------------------------------------------------------------------------------------------- #
