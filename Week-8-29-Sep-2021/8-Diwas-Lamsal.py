@@ -60,7 +60,7 @@ class Tree:
     def _printTree(self, node):
         if node is not None:
             self._printTree(node.l)
-            print(str(node.v) + ' ')
+            print(str(node.v), end=" ")
             self._printTree(node.r)
 
     # ----------------------------- My solution begins here -----------------------------
@@ -147,7 +147,7 @@ class Tree:
             ylParent = y
 
 
-# --------------------------------------- TESTING ----------------------------------------------------
+# --------------------------------------- TEST ------------------------------------------
 
 tree = Tree()
 tree.add(3)
@@ -156,23 +156,30 @@ tree.add(0)
 tree.add(8)
 tree.add(2)
 tree.printTree()
-print(tree.find(3).v)
+print(f"\n{tree.find(3).v}")
 print(tree.find(10))
+tree.deleteTree()
 tree.printTree()
 
 # Ascending sort was already done for us, so, I am doing descending sort
 # Delete node is also implemented
 
-print("-----------------------------------")
-# tree.deleteTree()
-print("Find 3 before delete: ", end=" ")
-print(tree.find(3).v)
+tree = Tree()
+for i in range(0, 20, 2):
+    tree.add(i)
+
+print("Ascending: ", end="")
+tree.printTree()
+print("\n-----------------------------------")
+print("Find 6 before delete: ", end=" ")
+print(tree.find(6).v)
 tree.printDescending()
 print()
-tree.delete(3)
+print("Delete 6, 8, and 14")
+tree.delete(6)
 tree.delete(8)
-tree.delete(4)
-print("Find 3 after delete: ", end=" ")
-print(tree.find(3))
+tree.delete(14)
+print("Find 6 after delete: ", end=" ")
+print(tree.find(6))
 tree.printDescending()
 print("\n-----------------------------------", end="")
