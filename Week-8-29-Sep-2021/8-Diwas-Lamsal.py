@@ -146,6 +146,20 @@ class Tree:
             ylParent = self.findParent(self.root, y.r)
             ylParent = y
 
+    # Find Successor
+    # Pseudocode from book
+    def treeSuccessor(self, value):
+        node = self.find(value)
+        if node is None:
+            return None
+        if node.r is not None:
+            return self.treeMinimum(node.r)
+        y = self.findParent(self.getRoot, node)
+        while y is not None and node == y.r:
+            node = y
+            y = self.findParent(self.getRoot, y)
+        return y
+
 
 # --------------------------------------- TEST ------------------------------------------
 
@@ -165,21 +179,32 @@ tree.printTree()
 # Delete node is also implemented
 
 tree = Tree()
-for i in range(0, 20, 2):
+for i in range(0, 22, 2):
     tree.add(i)
 
 print("Ascending: ", end="")
 tree.printTree()
 print("\n-----------------------------------")
+print("Testing Successor")
+print("Successor of 6:", tree.treeSuccessor(6) if tree.treeSuccessor(6) is None else tree.treeSuccessor(6).v)
+print("Successor of 5:", tree.treeSuccessor(5) if tree.treeSuccessor(5) is None else tree.treeSuccessor(5).v)
+print("Successor of 8:", tree.treeSuccessor(8) if tree.treeSuccessor(8) is None else tree.treeSuccessor(8).v)
+print("Successor of 4:", tree.treeSuccessor(4) if tree.treeSuccessor(4) is None else tree.treeSuccessor(4).v)
+print("Successor of 18:", tree.treeSuccessor(18) if tree.treeSuccessor(18) is None else tree.treeSuccessor(18).v)
+print("-----------------------------------")
+
 print("Find 6 before delete: ", end=" ")
 print(tree.find(6).v)
+print("Tree Descending before delete: ", end="")
 tree.printDescending()
 print()
 print("Delete 6, 8, and 14")
 tree.delete(6)
 tree.delete(8)
-tree.delete(14)
-print("Find 6 after delete: ", end=" ")
+tree.delete(20)
+tree.delete(0)
+print("Find 6 after delete: ", end="")
 print(tree.find(6))
+print("Tree Descending after delete: ", end="")
 tree.printDescending()
 print("\n-----------------------------------", end="")
