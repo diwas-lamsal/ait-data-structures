@@ -154,10 +154,10 @@ class Tree:
             return None
         if node.r is not None:
             return self.treeMinimum(node.r)
-        y = self.findParent(self.getRoot, node)
+        y = self.findParent(self.root, node)
         while y is not None and node == y.r:
             node = y
-            y = self.findParent(self.getRoot, y)
+            y = self.findParent(self.root, y)
         return y
 
 
@@ -181,6 +181,8 @@ tree.printTree()
 tree = Tree()
 for i in range(0, 22, 2):
     tree.add(i)
+for i in range(21, 1, -2):
+    tree.add(i)
 
 print("Ascending: ", end="")
 tree.printTree()
@@ -191,6 +193,7 @@ print("Successor of 5:", tree.treeSuccessor(5) if tree.treeSuccessor(5) is None 
 print("Successor of 8:", tree.treeSuccessor(8) if tree.treeSuccessor(8) is None else tree.treeSuccessor(8).v)
 print("Successor of 4:", tree.treeSuccessor(4) if tree.treeSuccessor(4) is None else tree.treeSuccessor(4).v)
 print("Successor of 18:", tree.treeSuccessor(18) if tree.treeSuccessor(18) is None else tree.treeSuccessor(18).v)
+print("Successor of 21:", tree.treeSuccessor(21) if tree.treeSuccessor(21) is None else tree.treeSuccessor(21).v)
 print("-----------------------------------")
 
 print("Find 6 before delete: ", end=" ")
