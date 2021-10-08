@@ -1,0 +1,22 @@
+-- Because I was out of time by the end, I could not add the tests 
+
+-- I was only able to add the one below which checks if the current student gets added (which itself is incomplete)
+
+  test "should add current student to project" do
+    sign_in users(:three)
+    get add_student_self_url(id: @project.id)
+	assert_redirected_to project_url(@project)
+  end
+  
+ -- I have, however, managed to get a code coverage of 100%
+ 
+-- In my users.yml:
+
+three:
+  email: 'user3@example.com'
+  is_student?: true
+  confirmed_at: "2020-09-09 07:01:51.461869"
+  
+ 
+-- I also could not test the "Also be sure to test for the condition that when a non-student user is viewing a project,
+--  he/she should not see the “add self to project” link/button." because of time.

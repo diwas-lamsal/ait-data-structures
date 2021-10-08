@@ -1,0 +1,73 @@
+-- Final Step definitions:
+
+# ------------------------------------------------------------------------------------------
+
+Given("I am a student") do
+  @student = FactoryBot.create :student_user
+
+  # This step is for signing in as the step was not defined to sign in
+  visit root_url
+  sign_in(@student)
+end
+
+Given("I want to add myself to the project") do
+  @student_to_add = @student
+end
+
+Then("I should see a link to add myself to the project") do
+  expect(page).to have_link("Add me to project")
+end
+
+When("I click the “add myself” link") do
+  page.find("a", text: "Add me to project").click
+end
+
+Then("I should be listed as a student on the project") do
+  expect(page).to have_content(@student.email)
+  save_and_open_page
+end
+
+# I added this to login the student to find the link
+def sign_in(user)
+  click_link "Sign in"
+  fill_in "Email", with: user.email
+  fill_in "Password", with: user.password
+  click_button "Log in"
+end
+
+# ------------------------------------------------------------------------------------------
+
+
+-- My new method in projects_controller:
+
+  #  My code
+
+  # This is not the best implementation of many to many relationships but i tried to find the easiset way
+  # to do it because I was running out of time
+  def add_student_self
+    # Add student user as a student
+    @student = current_user
+    @student = Student.create(name: @student.email, studentid: @student.id)
+    @project = Project.find(params[:id])
+    @student.save
+
+    # Add student to project
+    @ps = ProjectStudent.create(project_id: @project.id, student_id: @student.id)
+    @ps.save
+
+    redirect_to action: "show", id: @project.id
+  end
+
+
+# ------------------------------------------------------------------------------------------
+
+
+-- My edited portion in the show.html.erb of project
+
+<% if user_signed_in? %>
+  <% if current_user.is_student? %>
+    <%= link_to "Add me to project", add_student_self_path(id: @project.id) %>
+  <% end %>
+<% end %>
+
+# ------------------------------------------------------------------------------------------

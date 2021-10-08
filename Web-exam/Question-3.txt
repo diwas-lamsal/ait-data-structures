@@ -1,0 +1,51 @@
+
+-- For accomodating student users, I added a migration
+
+class AddIsStudentToUsers < ActiveRecord::Migration[6.0]
+  def change
+    add_column :users, :is_student?, :boolean
+  end
+end
+
+
+-- For Steps:
+
+
+#  new steps, these were the steps not defined, the other steps that were already defined didn't have to be recreated
+
+Given("I am a student") do
+  @student = FactoryBot.create :student_user
+end
+
+Given("I want to add myself to the project") do
+end
+
+Then("I should see a link to add myself to the project") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When("I click the “add myself” link") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then("I should be listed as a student on the project") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+
+-- The factory definition (my new student_user factory):
+factory :student_user, class: User do
+    email { "joe_student@ait.asia" }
+    password { "testpassword" }
+    confirmed_at { 1.day.ago }
+    is_student? { true }
+end
+  
+
+
+
+
+
+
+
+

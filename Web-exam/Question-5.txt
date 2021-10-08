@@ -1,0 +1,49 @@
+ -- The new steps:
+ 
+Given("I am a student") do
+  @user = FactoryBot.create :student_user
+  visit root_url
+  sign_in(@user)
+end
+
+Given("I want to add myself to the project") do
+  @student_to_add = FactoryBot.build :student
+end
+
+Then("I should see a link to add myself to the project") do
+  expect(page).to have_link("Add me to project")
+end
+
+When("I click the “add myself” link") do
+  page.find("a#addmyself").click()
+end
+
+Then("I should be listed as a student on the project") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+# I added this to login the student to find the link
+def sign_in(user)
+  click_link "Sign in"
+  fill_in "Email", with: user.email
+  fill_in "Password", with: user.password
+  click_button "Log in"
+end
+
+-- The view (for now, at this point, I have not added the functionality to add myself to project. The link only appears if the user is student.
+
+-- At the bottom of the project show.html.erb
+-- The link to be changed in the next step
+
+<% if user_signed_in? %>
+  <% if current_user.is_student? %>
+    <a href = "#" id="addmyself">Add me to project</a>
+  <% end %>
+<% end %>
+
+-- EDIT: Later, I updated it do:
+<% if user_signed_in? %>
+  <% if current_user.is_student? %>
+    <%= link_to "Add me to project", add_student_self_path(id: @project.id) %>
+  <% end %>
+<% end %>
